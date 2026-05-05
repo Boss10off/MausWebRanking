@@ -23,6 +23,26 @@ const withPoints = teams
   .sort((a, b) => b.points - a.points || b.wins - a.wins);
 
 const tbody = document.getElementById("standings-body");
+const overlay = document.getElementById("modal-overlay");
+const modalClose = document.getElementById("modal-close");
+
+function openModal(team, rank) {
+  document.getElementById("modal-team-name").textContent = team.name;
+  document.getElementById("modal-rank").textContent = rank;
+  document.getElementById("modal-wins").textContent = team.wins;
+  document.getElementById("modal-losses").textContent = team.losses;
+  document.getElementById("modal-draws").textContent = team.draws;
+  document.getElementById("modal-points").textContent = team.points;
+  overlay.classList.add("active");
+}
+
+function closeModal() {
+  overlay.classList.remove("active");
+}
+
+modalClose.addEventListener("click", closeModal);
+overlay.addEventListener("click", e => { if (e.target === overlay) closeModal(); });
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeModal(); });
 
 withPoints.forEach((team, i, arr) => {
   const rank = arr.findIndex(t => t.points === team.points) + 1;
@@ -36,5 +56,8 @@ withPoints.forEach((team, i, arr) => {
     <td>${team.draws}</td>
     <td><span class="points">${team.points}</span></td>
   `;
+  tr.addEventListener("click", () => {
+    if (window.innerWidth <= 480) openModal(team, rank);
+  });
   tbody.appendChild(tr);
 });

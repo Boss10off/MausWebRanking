@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tournament Results</title>
+  <title>Bierpongturnier Ergebnisse</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="container">
     <div class="header">
       <img src="Logo_Maus_2013.png" alt="Tournament Logo" class="logo" />
-      <div>
+      <div style="text-align: center; width: 100%;">
         <h1 class="title-main">Rangliste</h1><h1>Bierpongturnier 2026</h1>
         <p class="subtitle">Ergebnisse</p>
       </div>
@@ -29,6 +29,21 @@
       </thead>
       <tbody id="standings-body"></tbody>
     </table>
+  </div>
+
+  <!-- Stats popup modal -->
+  <div id="modal-overlay" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-team-name">
+    <div class="modal">
+      <button class="modal-close" id="modal-close" aria-label="Close">&times;</button>
+      <h2 id="modal-team-name"></h2>
+      <div class="modal-stats">
+        <div class="stat"><span class="stat-label">Platz</span><span id="modal-rank" class="stat-value"></span></div>
+        <div class="stat"><span class="stat-label">Gewonnen</span><span id="modal-wins" class="stat-value"></span></div>
+        <div class="stat"><span class="stat-label">Verloren</span><span id="modal-losses" class="stat-value"></span></div>
+        <div class="stat"><span class="stat-label">Unentschieden</span><span id="modal-draws" class="stat-value"></span></div>
+        <div class="stat"><span class="stat-label">Punkte</span><span id="modal-points" class="stat-value points"></span></div>
+      </div>
+    </div>
   </div>
 
   <script src="standings.js"></script>

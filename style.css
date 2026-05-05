@@ -13,25 +13,31 @@ body {
   align-items: flex-start;
   justify-content: center;
   padding: 48px 16px;
+  width: 100%;
 }
 
 .container {
   width: 100%;
   max-width: 700px;
+  margin: 0 auto;
 }
 
 .header {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   text-align: center;
   gap: 12px;
   margin-bottom: 32px;
+  width: 100%;
 }
 
 .logo {
   height: 160px;
   width: auto;
+  display: block;
+  margin: 0 auto;
 }
 
 h1 {
@@ -107,3 +113,113 @@ tr.rank-3 .rank { color: #a0522d; font-weight: 700; }
 tr.rank-1 { border-left: 3px solid #ffd700; }
 tr.rank-2 { border-left: 3px solid #c0c0c0; }
 tr.rank-3 { border-left: 3px solid #cd7f32; }
+
+/* Mobile: hide stat columns, show only rank, name, points */
+@media (max-width: 480px) {
+  body {
+    padding: 24px 10px;
+  }
+
+  .logo {
+    height: 100px;
+  }
+
+  .title-main {
+    font-size: 2rem;
+  }
+
+  h1 {
+    font-size: 1.3rem;
+  }
+
+  th, td {
+    padding: 10px 8px;
+    font-size: 0.8rem;
+  }
+
+  thead tr {
+    font-size: 0.65rem;
+    letter-spacing: 0.5px;
+  }
+
+  /* Hide W / L / D columns (3rd, 4th, 5th) */
+  th:nth-child(3), td:nth-child(3),
+  th:nth-child(4), td:nth-child(4),
+  th:nth-child(5), td:nth-child(5) {
+    display: none;
+  }
+
+  tbody tr {
+    cursor: pointer;
+  }
+}
+
+/* Modal */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 100;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-overlay.active {
+  display: flex;
+}
+
+.modal {
+  background: #f0f7f1;
+  color: #1a1a1a;
+  border-radius: 14px;
+  padding: 28px 24px;
+  width: 90%;
+  max-width: 340px;
+  position: relative;
+}
+
+.modal h2 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #1a4d2e;
+}
+
+.modal-close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #555;
+  line-height: 1;
+}
+
+.modal-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.stat {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #c8e0cc;
+  padding-bottom: 8px;
+}
+
+.stat:last-child {
+  border-bottom: none;
+}
+
+.stat-label {
+  color: #4a6b50;
+  font-size: 0.9rem;
+}
+
+.stat-value {
+  font-weight: 600;
+}
