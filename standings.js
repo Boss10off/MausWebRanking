@@ -29,10 +29,10 @@ const modalClose = document.getElementById("modal-close");
 function openModal(team, rank) {
   document.getElementById("modal-team-name").textContent = team.name;
   document.getElementById("modal-rank").textContent = rank;
+  document.getElementById("modal-points").textContent = team.points;
   document.getElementById("modal-wins").textContent = team.wins;
   document.getElementById("modal-losses").textContent = team.losses;
   document.getElementById("modal-draws").textContent = team.draws;
-  document.getElementById("modal-points").textContent = team.points;
   overlay.classList.add("active");
 }
 
@@ -51,10 +51,10 @@ withPoints.forEach((team, i, arr) => {
   tr.innerHTML = `
     <td><span class="rank">${rank}</span></td>
     <td><span class="team-name">${team.name}</span></td>
+    <td><span class="points">${team.points}</span></td>
     <td>${team.wins}</td>
     <td>${team.losses}</td>
     <td>${team.draws}</td>
-    <td><span class="points">${team.points}</span></td>
   `;
   tr.addEventListener("click", () => {
     if (window.innerWidth <= 480) openModal(team, rank);
