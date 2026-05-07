@@ -26,9 +26,12 @@ const tbody = document.getElementById("standings-body");
 const overlay = document.getElementById("modal-overlay");
 const modalClose = document.getElementById("modal-close");
 
-// Pre-compute ranks: dense ranking based on points only
-const uniquePointsDesc = [...new Set(withPoints.map(t => t.points))].sort((a, b) => b - a);
-const rankMap = new Map(uniquePointsDesc.map((pts, i) => [pts, i + 1]));
+// Pre-compute dense ranks based on points first, then losses as tiebreaker
+const uniqueCombos = [...new Map(
+  withPoints.map(t => [`${t.points}_${t.losses}`, { points: t.points, losses: t.losses }])
+).values()].sort((a, b) => b.points - a.points || a.losses - b.losses);
+
+const rankMap = new Map(uniqueCombos.map((combo, i) => [`${combo.points}_${combo.losses}`, i + 1]));
 
 function openModal(team, rank) {
   document.getElementById("modal-team-name").textContent = team.name;
@@ -52,7 +55,7 @@ document.addEventListener("keydown", e => { if (e.key === "Escape") closeModal()
 window.addEventListener("resize", () => { if (window.innerWidth > 480) closeModal(); });
 
 withPoints.forEach((team, i, arr) => {
-  const rank = rankMap.get(team.points);
+  const rank = rankMap.get(`${team.points}_${team.losses}`);
   const tr = document.createElement("tr");
   if (rank <= 3) tr.classList.add(`rank-${rank}`);
   tr.innerHTML = `
