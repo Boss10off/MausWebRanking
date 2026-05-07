@@ -12,15 +12,15 @@ const teams = [
   { name: "Team Hotel",   wins: 1, losses: 9, draws: 0 },
   { name: "Team Hotel",   wins: 1, losses: 9, draws: 0 },
   { name: "Team Hotel",   wins: 1, losses: 9, draws: 0 },
-  { name: "Team Hotel",   wins: 1, losses: 9, draws: 0 },
-  { name: "Team Hotel",   wins: 1, losses: 9, draws: 0 },
-  { name: "Team Hotel",   wins: 1, losses: 9, draws: 0 },
+  { name: "Team Hotel",   wins: 1, losses: 7, draws: 0 },
+  { name: "Team Hotel",   wins: 1, losses: 6, draws: 0 },
+  { name: "Team Hotel",   wins: 1, losses: 8, draws: 0 },
 ];
 
 // Points: 3 per win, 1 per draw
 const withPoints = teams
   .map(t => ({ ...t, points: t.wins * 2 + t.draws }))
-  .sort((a, b) => b.points - a.points || b.wins - a.wins);
+  .sort((a, b) => b.points - a.points || a.losses - b.losses);
 
 const tbody = document.getElementById("standings-body");
 const overlay = document.getElementById("modal-overlay");
