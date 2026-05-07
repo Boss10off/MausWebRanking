@@ -43,6 +43,7 @@ function closeModal() {
 modalClose.addEventListener("click", closeModal);
 overlay.addEventListener("click", e => { if (e.target === overlay) closeModal(); });
 document.addEventListener("keydown", e => { if (e.key === "Escape") closeModal(); });
+window.addEventListener("resize", () => { if (window.innerWidth > 480) closeModal(); });
 
 withPoints.forEach((team, i, arr) => {
   const rank = arr.findIndex(t => t.points === team.points) + 1;
