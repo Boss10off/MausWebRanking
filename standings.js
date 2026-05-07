@@ -2,7 +2,7 @@ const teams = [
   { name: "Team Alpha",   wins: 8, losses: 1, draws: 1 },
   { name: "Team Bravo",   wins: 7, losses: 2, draws: 1 },
   { name: "Team Charlie", wins: 6, losses: 2, draws: 2 },
-  { name: "Team Delta",   wins: 5, losses: 4, draws: 1 },
+  { name: "Team Delta",   wins: 6, losses: 4, draws: 2 },
   { name: "Team Echo",    wins: 4, losses: 4, draws: 2 },
   { name: "Team Foxtrot", wins: 3, losses: 6, draws: 1 },
   { name: "Team Golf",    wins: 2, losses: 7, draws: 1 },
@@ -26,6 +26,10 @@ const tbody = document.getElementById("standings-body");
 const overlay = document.getElementById("modal-overlay");
 const modalClose = document.getElementById("modal-close");
 
+// Pre-compute ranks: dense ranking based on points only
+const uniquePointsDesc = [...new Set(withPoints.map(t => t.points))].sort((a, b) => b - a);
+const rankMap = new Map(uniquePointsDesc.map((pts, i) => [pts, i + 1]));
+
 function openModal(team, rank) {
   document.getElementById("modal-team-name").textContent = team.name;
   document.getElementById("modal-rank").textContent = rank;
@@ -33,11 +37,13 @@ function openModal(team, rank) {
   document.getElementById("modal-wins").textContent = team.wins;
   document.getElementById("modal-losses").textContent = team.losses;
   document.getElementById("modal-draws").textContent = team.draws;
+  overlay.removeAttribute("hidden");
   overlay.classList.add("active");
 }
 
 function closeModal() {
   overlay.classList.remove("active");
+  overlay.setAttribute("hidden", "");
 }
 
 modalClose.addEventListener("click", closeModal);
@@ -46,7 +52,7 @@ document.addEventListener("keydown", e => { if (e.key === "Escape") closeModal()
 window.addEventListener("resize", () => { if (window.innerWidth > 480) closeModal(); });
 
 withPoints.forEach((team, i, arr) => {
-  const rank = arr.findIndex(t => t.points === team.points) + 1;
+  const rank = rankMap.get(team.points);
   const tr = document.createElement("tr");
   if (rank <= 3) tr.classList.add(`rank-${rank}`);
   tr.innerHTML = `
